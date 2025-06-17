@@ -32,10 +32,20 @@ const Login = () => {
     e.preventDefault();
     setError('');
     try {
-      const endpoint = isLogin ? '/login' : '/register';
+      const endpoint = isLogin ? '/login' : 'register';
       const payload = isLogin
         ? { email: formData.email, password: formData.password }
-        : { email: formData.email, password: formData.password, name: formData.name, gender: formData.gender };
+        : { 
+        email: formData.email, 
+        password: formData.password, 
+        name: formData.name, 
+        gender: formData.gender,
+        profile: {
+          name: formData.name,
+          email: formData.email,
+          gender: formData.gender
+        }
+      };
       const response = await axiosInstance.post(endpoint, payload);
       const data = response.data;
       dispatch(setUser({

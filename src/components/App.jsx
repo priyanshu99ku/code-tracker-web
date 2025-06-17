@@ -4,8 +4,8 @@ import Login from './login';
 import Home from './Home';
 import Navbar from './Navbar';
 import Footer from './Footer';
-import ProfileNavbar from './ProfileNavbar';
 import Profile from './Profile';
+import EditProfile from './EditProfile';
 
 function App() {
   return (
@@ -23,8 +23,19 @@ function App() {
         } />
         <Route path="/profile" element={
           <>
-            <ProfileNavbar />
-            <Profile />
+            <Navbar />
+            <div className="min-h-[80vh]">
+              <Profile />
+            </div>
+            <Footer />
+          </>
+        } />
+        <Route path="/edit-profile" element={
+          <>
+            <Navbar />
+            <div className="min-h-[80vh]">
+              <EditProfile />
+            </div>
             <Footer />
           </>
         } />
