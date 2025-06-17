@@ -1,6 +1,12 @@
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { setUser } from '../utils/userSlice'
+import { useNavigate } from 'react-router-dom'
+import axiosInstance from '../utils/axiosconfig'
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(true)
   const [formData, setFormData] = useState({
     email: '',
@@ -22,11 +28,28 @@ const Login = () => {
     }))
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    setError('')
-    // Add API call logic here
-    console.log('Form submitted:', formData)
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    try {
+      const endpoint = isLogin ? '/login' : '/register';
+      const payload = isLogin
+        ? { email: formData.email, password: formData.password }
+        : { email: formData.email, password: formData.password, name: formData.name, gender: formData.gender };
+      const response = await axiosInstance.post(endpoint, payload);
+      const data = response.data;
+      dispatch(setUser({
+        user: data.user || data,
+        token: data.token || data.accessToken || null,
+      }));
+      navigate('/home');
+    } catch (err) {
+      setError(
+        err.response?.data?.message ||
+        err.message ||
+        'Network error. Please try again.'
+      );
+    }
   }
 
   return (
