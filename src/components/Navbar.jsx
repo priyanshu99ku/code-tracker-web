@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { clearUser } from '../utils/userSlice';
 import { 
@@ -17,12 +17,26 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.user.user);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const location = useLocation();
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [dropdownRef]);
   return (
     <nav className="w-full bg-blue-950 py-3 px-4 flex justify-between items-center shadow-md">
       <Link to="/home" className="text-white text-2xl font-bold {user ? '' : 'opacity-50 cursor-not-allowed'}">CodeTracker</Link>
       <div className="flex items-center">
         {/* Main Navigation Dropdown */}
-        <div className="relative">
+        <div className="relative" ref={dropdownRef}>
           <button
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             className="text-white flex items-center space-x-2"
@@ -39,15 +53,19 @@ const Navbar = () => {
                 <FaHome className="w-5 h-5" /> Home
               </Link>
              
-              <a href="#contest" className="block px-4 py-2 text-gray-800 hover:bg-gray-100 flex items-center gap-2">
-                <FaCalendarCheck className="w-5 h-5" /> Contest
-              </a>
-              <a href="#feedback" className="block px-4 py-2 text-gray-800 hover:bg-gray-100 flex items-center gap-2">
-                <FaCommentDots className="w-5 h-5" /> Feedback
-              </a>
-              <a href="#critique" className="block px-4 py-2 text-gray-800 hover:bg-gray-100 flex items-center gap-2">
-                <FaClipboardCheck className="w-5 h-5" /> Critique
-              </a>
+                            {location.pathname === '/home' && (
+                <>
+                  <a href="#contest" className="block px-4 py-2 text-gray-800 hover:bg-gray-100 flex items-center gap-2">
+                    <FaCalendarCheck className="w-5 h-5" /> Contest
+                  </a>
+                  <a href="#feedback" className="block px-4 py-2 text-gray-800 hover:bg-gray-100 flex items-center gap-2">
+                    <FaCommentDots className="w-5 h-5" /> Feedback
+                  </a>
+                  <a href="#critique" className="block px-4 py-2 text-gray-800 hover:bg-gray-100 flex items-center gap-2">
+                    <FaClipboardCheck className="w-5 h-5" /> Critique
+                  </a>
+                </>
+              )}
               <div className="border-t border-gray-200 my-2"></div>
               {/* User Actions */}
               {user ? (
