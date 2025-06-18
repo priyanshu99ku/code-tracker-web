@@ -8,7 +8,8 @@ import {
   FaCommentDots,
   FaClipboardCheck,
   FaUserCircle,
-  FaSignOutAlt
+  FaSignOutAlt,
+  FaTachometerAlt
 } from 'react-icons/fa';
 
 const Navbar = () => {
@@ -37,6 +38,7 @@ const Navbar = () => {
               <Link to="/home" className="block px-4 py-2 text-gray-800 hover:bg-gray-100 flex items-center gap-2 {user ? '' : 'opacity-50 cursor-not-allowed'}">
                 <FaHome className="w-5 h-5" /> Home
               </Link>
+             
               <a href="#contest" className="block px-4 py-2 text-gray-800 hover:bg-gray-100 flex items-center gap-2">
                 <FaCalendarCheck className="w-5 h-5" /> Contest
               </a>
@@ -50,6 +52,12 @@ const Navbar = () => {
               {/* User Actions */}
               {user ? (
                 <>
+                  <Link to="/dashboard" className="block px-4 py-2 text-gray-800 hover:bg-gray-100 flex items-center gap-2">
+                <FaTachometerAlt className="w-5 h-5" /> Dashboard
+              </Link>
+
+
+
                   <Link to="/profile" className="block px-4 py-2 text-gray-800 hover:bg-gray-100 flex items-center gap-2">
                     <FaUserCircle className="w-5 h-5" /> Profile
                   </Link>

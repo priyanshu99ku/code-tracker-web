@@ -6,6 +6,7 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 import Profile from './Profile';
 import EditProfile from './EditProfile';
+import Dashboard from './Dashboard';
 
 function App() {
   return (
@@ -26,6 +27,15 @@ function App() {
             <Navbar />
             <div className="min-h-[80vh]">
               <Profile />
+            </div>
+            <Footer />
+          </>
+        } />
+        <Route path="/dashboard" element={
+          <>
+            <Navbar />
+            <div className="min-h-[80vh]">
+              <Dashboard />
             </div>
             <Footer />
           </>
