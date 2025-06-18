@@ -80,7 +80,7 @@ const Dashboard = () => {
   }, [profile]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-100 to-blue-200 py-12 px-4">
+    <div className="min-h-screen bg-green-50 py-10 px-4 sm:px-6 lg:px-8">
       <div className="container mx-auto">
         <h1 className="text-5xl font-extrabold text-center text-gray-800 mb-4">Your Coding Dashboard</h1>
         <p className="text-center text-gray-600 mb-12 text-lg">A comprehensive overview of your competitive programming profiles.</p>
@@ -89,12 +89,12 @@ const Dashboard = () => {
           
           <div className="xl:col-span-2">
             {loadingLeetCode && (
-              <div className="text-center p-8 bg-white rounded-lg shadow-md"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div><p className="mt-4 text-gray-600">Fetching LeetCode Stats...</p></div>
+              <div className="text-center p-8 bg-green-100 rounded-lg shadow-md"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div><p className="mt-4 text-gray-600">Fetching LeetCode Stats...</p></div>
             )}
             {errorLeetCode && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg text-center">{errorLeetCode}</div>}
             {leetcodeData && <LeetCodeCard leetcodeData={leetcodeData} />}
             {!loadingLeetCode && !errorLeetCode && !leetcodeData && (
-              <div className="text-center text-gray-500 p-8 bg-white rounded-lg shadow-md">
+              <div className="text-center text-gray-500 p-8 bg-green-100 rounded-lg shadow-md">
                 <p>No LeetCode username found in your profile. Please add it to see your stats.</p>
               </div>
             )}
@@ -102,12 +102,12 @@ const Dashboard = () => {
 
           <div>
             {loadingCodeforces && (
-              <div className="text-center p-8 bg-white rounded-lg shadow-md"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-700 mx-auto"></div><p className="mt-4 text-gray-600">Fetching Codeforces Stats...</p></div>
+              <div className="text-center p-8 bg-green-100 rounded-lg shadow-md"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-700 mx-auto"></div><p className="mt-4 text-gray-600">Fetching Codeforces Stats...</p></div>
             )}
             {errorCodeforces && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg text-center">{errorCodeforces}</div>}
             {codeforcesData && <CodeforcesCard codeforcesData={codeforcesData} />}
             {!loadingCodeforces && !errorCodeforces && !codeforcesData && (
-              <div className="text-center text-gray-500 p-8 bg-white rounded-lg shadow-md h-full flex items-center justify-center">
+              <div className="text-center text-gray-500 p-8 bg-green-100 rounded-lg shadow-md h-full flex items-center justify-center">
                 <p>No Codeforces username found in your profile. Please add it to see your stats.</p>
               </div>
             )}
@@ -115,12 +115,12 @@ const Dashboard = () => {
           
           <div>
             {loadingCodeChef && (
-              <div className="text-center p-8 bg-white rounded-lg shadow-md"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500 mx-auto"></div><p className="mt-4 text-gray-600">Fetching CodeChef Stats...</p></div>
+              <div className="text-center p-8 bg-green-100 rounded-lg shadow-md"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500 mx-auto"></div><p className="mt-4 text-gray-600">Fetching CodeChef Stats...</p></div>
             )}
             {errorCodeChef && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg text-center">{errorCodeChef}</div>}
             {codechefData && <CodeChefCard codechefData={codechefData} />}
             {!loadingCodeChef && !errorCodeChef && !codechefData && (
-              <div className="text-center text-gray-500 p-8 bg-white rounded-lg shadow-md h-full flex items-center justify-center">
+              <div className="text-center text-gray-500 p-8 bg-green-100 rounded-lg shadow-md h-full flex items-center justify-center">
                 <p>No CodeChef username found in your profile. Please add it to see your stats.</p>
               </div>
             )}

@@ -35,7 +35,7 @@ const CodeforcesCard = ({ codeforcesData }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6 max-w-4xl mx-auto h-full flex flex-col transition-transform duration-300 ease-in-out hover:scale-[1.02] hover:shadow-2xl">
+    <div className="bg-green-100 rounded-lg shadow-lg p-6 max-w-4xl mx-auto h-full flex flex-col transition-transform duration-300 ease-in-out hover:scale-[1.02] hover:shadow-2xl">
       <div className="flex items-center mb-6">
         <img src={avatar} alt={`${handle}'s avatar`} className="w-20 h-20 rounded-full mr-6 border-4 border-gray-700" />
         <div>

@@ -34,7 +34,7 @@ const ComparisonCard = ({ leetcodeData, codeforcesData, codechefData }) => {
   ]
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6 mt-8 transition-transform duration-300 ease-in-out hover:scale-[1.02] hover:shadow-2xl">
+    <div className="bg-green-100 rounded-lg shadow-lg p-6 mt-8 transition-transform duration-300 ease-in-out hover:scale-[1.02] hover:shadow-2xl">
       <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">Platform Comparison</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         <div>

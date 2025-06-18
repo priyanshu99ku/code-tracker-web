@@ -31,7 +31,7 @@ const LeetCodeCard = ({ leetcodeData }) => {
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6 max-w-4xl mx-auto transition-transform duration-300 ease-in-out hover:scale-[1.02] hover:shadow-2xl">
+    <div className="bg-green-100 rounded-lg shadow-lg p-6 max-w-4xl mx-auto transition-transform duration-300 ease-in-out hover:scale-[1.02] hover:shadow-2xl">
       <div className="flex items-center mb-6">
         <img src={userAvatar} alt={`${username}'s avatar`} className="w-20 h-20 rounded-full mr-6 border-4 border-blue-500" />
         <div>
