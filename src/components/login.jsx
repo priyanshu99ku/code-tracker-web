@@ -67,7 +67,7 @@ const Login = () => {
       <div className="w-full max-w-md mx-4">
         <div className="card bg-green-200 shadow-xl">
           <div className="card-body">
-            <h2 className="text-2xl font-bold text-center mb-4">
+            <h2 className="text-2xl font-bold text-center mb-4 text-blue-950">
               {isLogin ? 'Welcome Back' : 'Create Account'}
             </h2>
             
@@ -169,7 +169,7 @@ const Login = () => {
             
 
               <div className="text-center">
-                <p className="text-sm">
+                <p className="text-sm text-blue-950">
                   {isLogin
                     ? "Don't have an account?"
                     : "Already have an account?"}

@@ -12,7 +12,7 @@ const Home = () => {
 
       {user && (
         <div className="p-4 rounded bg-white shadow text-center">
-          <h2 className="text-xl font-semibold">Hello, {user.name || user.email || 'User'}!</h2>
+          <h2 className="text-xl font-semibold text-blue-950">Hello, {user.name || user.email || 'User'}!</h2>
         
         </div>
       )}
