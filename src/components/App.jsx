@@ -8,6 +8,7 @@ import Profile from './Profile';
 import EditProfile from './EditProfile';
 import Dashboard from './Dashboard';
 import Discussion from './Discussion';
+import Problems from './Problems';
 
 function App() {
   return (
@@ -55,6 +56,15 @@ function App() {
             <Navbar />
             <div className="min-h-[80vh]">
               <Discussion />
+            </div>
+            <Footer />
+          </>
+        } />
+              <Route path="/problems" element={
+          <>
+            <Navbar />
+            <div className="min-h-[80vh]">
+              <Problems />
             </div>
             <Footer />
           </>
