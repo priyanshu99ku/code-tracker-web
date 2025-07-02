@@ -19,6 +19,17 @@ const Problems = () => {
   const [ratingPage, setRatingPage] = useState(0); // 0 => 800-1900, 1 => 2000-3500
   const [page, setPage] = useState(1);
 
+  // Return tailwind text color class based on CF rating
+  const getRatingColor = (r) => {
+    if (r < 1200) return 'text-gray-600'; // Newbie
+    if (r < 1400) return 'text-green-600'; // Pupil
+    if (r < 1600) return 'text-teal-600'; // Specialist
+    if (r < 1900) return 'text-blue-600'; // Expert / Candidate Master
+    if (r < 2100) return 'text-purple-600'; // Master
+    if (r < 2300) return 'text-orange-600'; // International Master
+    return 'text-red-600'; // Grandmaster & above
+  };
+
   const fetchProblems = async () => {
     setLoading(true);
     setError(null);
@@ -28,7 +39,10 @@ const Problems = () => {
         params.rating = rating;
       }
       if (selectedTags.length) params.tag = selectedTags.join(',');
-      if (page) params.page = page;
+      // fetch up to 100 problems once per rating
+      params.limit = 100;
+      // Request up to 100 problems at once
+      
 
       const { data } = await axiosInstance.get('/problems', { params });
       setProblems(data?.data || data?.problems || []);
@@ -41,8 +55,11 @@ const Problems = () => {
   };
 
   useEffect(() => {
+    // fetch only when rating or selected tags change
     fetchProblems();
-  }, [rating, selectedTags, page]);
+    // reset to first page when filter changes
+    setPage(1);
+  }, [rating, selectedTags]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -82,11 +99,12 @@ const Problems = () => {
         <button
           onClick={() => setRatingPage((p) => Math.max(p - 1, 0))}
           disabled={ratingPage === 0}
-          className="text-purple-400 disabled:opacity-40"
+          className="text-violet-900 disabled:opacity-40"
         >
           Prev
         </button>
         {RATING_PAGES[ratingPage].map((r) => {
+          const ratingColor = getRatingColor(r);
           const active = Number(rating) === r;
           return (
             <button
@@ -95,7 +113,7 @@ const Problems = () => {
                 setRating(String(r));
                 setPage(1);
               }}
-              className={`px-3 py-1 rounded transition-colors ${active ? 'border border-green-600 text-green-700' : 'text-blue-950 hover:text-green-700'} ${r % 400 === 0 ? 'text-green-600' : ''}`}
+              className={`px-3 py-1 rounded transition-colors ${active ? `border border-green-600 ${ratingColor}` : `${ratingColor} hover:text-green-700`}`}
             >
               {r}
             </button>
@@ -104,7 +122,7 @@ const Problems = () => {
         <button
           onClick={() => setRatingPage((p) => Math.min(p + 1, RATING_PAGES.length - 1))}
           disabled={ratingPage === RATING_PAGES.length - 1}
-          className="text-purple-400 disabled:opacity-40"
+          className="text-violet-900 disabled:opacity-40"
         >
           Next
         </button>
@@ -123,23 +141,29 @@ const Problems = () => {
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-green-100">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rating</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tags</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Link</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-16">#</th>
+                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
+                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider w-20">Rating</th>
+                
+                
               </tr>
             </thead>
             <tbody className="bg-green-50 divide-y divide-gray-200">
               {problems.map((problem, index) => (
-                <tr key={problem._id || index}>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-blue-950">{index + 1}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-blue-950">{problem.title}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-blue-950">{problem.rating}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-blue-950">{problem.tags?.join(', ')}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-blue-600 hover:underline">
-                    <a href={problem.url} target="_blank" rel="noopener noreferrer">View</a>
-                  </td>
+                <tr
+                  key={problem._id || index}
+                  onClick={() => {
+                    const url = `https://codeforces.com/problemset/problem/${problem.contestId}/${problem.index}`;
+                    window.open(url, '_blank');
+                  }}
+                  className="cursor-pointer even:bg-green-100 odd:bg-green-50 hover:bg-green-200 transition-colors">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-blue-950 w-16 text-left">{index + 1}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-blue-950 text-center w-full">{problem.name || problem.title}</td>
+                  <td className={`px-6 py-4 whitespace-nowrap text-sm text-right w-20 ${getRatingColor(problem.rating)}`}>{problem.rating}</td>
+                  
+
+
+
                 </tr>
               ))}
             </tbody>
@@ -148,13 +172,12 @@ const Problems = () => {
       )}
 
       {/* Pagination Controls */}
-      {problems.length > 0 && (
+      {false && (
         <div className="flex justify-center items-center space-x-4 mt-6">
           <button
             onClick={() => {
               if (page > 1) {
                 setPage(page - 1);
-                fetchProblems();
               }
             }}
             className="px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50"
@@ -165,8 +188,7 @@ const Problems = () => {
           <span>Page {page}</span>
           <button
             onClick={() => {
-              setPage(page + 1);
-              fetchProblems();
+              if (page < totalPages) setPage(page + 1);
             }}
             className="px-4 py-2 bg-blue-500 text-white rounded"
           >
